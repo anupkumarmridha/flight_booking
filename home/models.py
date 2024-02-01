@@ -6,7 +6,7 @@ from django.dispatch import receiver
 
 
 class Flight(models.Model):
-    flight_no = models.CharField(max_length=50)
+    flight_no = models.CharField(max_length=50, unique=True)
     flight_TYPES = [
         ("standard", "Standard"),
         ("deluxe", "Deluxe"),
