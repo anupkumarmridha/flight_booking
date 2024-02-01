@@ -8,9 +8,8 @@ from django.dispatch import receiver
 class Flight(models.Model):
     flight_no = models.CharField(max_length=50, unique=True)
     flight_TYPES = [
-        ("standard", "Standard"),
-        ("deluxe", "Deluxe"),
-        ("vip", "VIP"),
+        ("low cost carrier", "low cost carrier"),
+        ("full service", "full service"),
     ]
     name = models.CharField(max_length=100)
     type = models.CharField(max_length=20, choices=flight_TYPES)
@@ -27,8 +26,15 @@ class Seat(models.Model):
         ("window_seat", "window_seat"),
         ("aisle_seat", "aisle_seat"),
     ]
+    FLIGHT_CLASS = [
+        ("economy", "economy"),
+        ("premium_economy", "premium_economy"),
+        ("business", "business"),
+        ("first", "first"),
+    ]
     flight = models.ForeignKey(Flight, on_delete=models.CASCADE, related_name="seat_set")
     seat_number = models.CharField(max_length=10)
+    flight_class = models.CharField(max_length=20, choices=FLIGHT_CLASS)
     category = models.CharField(max_length=20, choices=SEAT_CATEGORIES)
     is_available = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -38,17 +44,47 @@ class Seat(models.Model):
         ordering = ["flight", "seat_number"]
 
     def __str__(self):
-        return f"{self.seat_number} - {self.flight.name} - ({self.category})"
+        return f"{self.seat_number} - {self.flight.name} - ({self.flight_class})"
 
 
 @receiver(post_save, sender=Flight)
 def create_seats(sender, instance, created, **kwargs):
     if created or instance.capacity != instance.seat_set.count():
         Seat.objects.filter(flight=instance).delete()
-        for i in range(instance.capacity):
+        economy_percentage = 0.4
+        premium_economy_percentage = 0.3
+        business_percentage = 0.2
+        first_percentage = 0.1
+        economy_seats = int(instance.capacity * economy_percentage)
+        premium_economy_seats = int(instance.capacity * premium_economy_percentage)
+        business_seats = int(instance.capacity * business_percentage)
+        first_seats = int(instance.capacity * first_percentage)
+        for i in range(economy_seats):
             Seat.objects.create(
                 flight=instance,
                 seat_number=str(i + 1),
+                flight_class="economy",
+                category="aisle_seat" if i % 2 == 0 else "window_seat",
+            )
+        for i in range(economy_seats, economy_seats + premium_economy_seats):
+            Seat.objects.create(
+                flight=instance,
+                seat_number=str(i + 1),
+                flight_class="premium_economy",
+                category="aisle_seat" if i % 2 == 0 else "window_seat",
+            )
+        for i in range(economy_seats + premium_economy_seats, economy_seats + premium_economy_seats + business_seats):
+            Seat.objects.create(
+                flight=instance,
+                seat_number=str(i + 1),
+                flight_class="business",
+                category="aisle_seat" if i % 2 == 0 else "window_seat",
+            )
+        for i in range(economy_seats + premium_economy_seats + business_seats, instance.capacity):
+            Seat.objects.create(
+                flight=instance,
+                seat_number=str(i + 1),
+                flight_class="first",
                 category="aisle_seat" if i % 2 == 0 else "window_seat",
             )
 
