@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, reverse, HttpResponse
-from home.models import Route, Stop, Seat, Schedule, Flight
+from home.models import Route, Seat, Schedule, Flight
 from booking.models import Booking, Payment
 from django.contrib import messages
 from django.contrib.auth.middleware import AuthenticationMiddleware
@@ -13,28 +13,15 @@ def booking(request, route_id, schedule_id):
     if not request.user.is_authenticated:
         return HttpResponse("Submission outside this window is not allowed 😎")
     route = Route.objects.get(pk=route_id)
-    AllStops = Stop.objects.filter(route=route).order_by("departure_time")
     schedule = Schedule.objects.get(pk=schedule_id)
     allSeats = Seat.objects.filter(flight=schedule.flight, is_available=True).order_by(
         "seat_number"
     )
     if request.method == "POST":
         user = request.user
-        source_stop_id = request.POST.get("source_location")
-        destination_stop_id = request.POST.get("destination_location")
-        print(source_stop_id)
-        if "Source Location" in source_stop_id:
-            messages.error(request, "Please select source Location!")
-            return redirect(reverse("booking", args=(route_id, schedule_id)))
-        if "Destination Location" in destination_stop_id:
-            messages.error(request, "Please select Destination Location!")
-            return redirect(reverse("booking", args=(route_id, schedule_id)))
-
+        
         total_price = request.POST.get("total_price")
         travel_date = request.POST.get("travel_date")
-
-        source_location = Stop.objects.get(id=source_stop_id)
-        destination_location = Stop.objects.get(id=destination_stop_id)
 
         seat_ids = request.POST.getlist("seat_ids")
         seats = Seat.objects.filter(id__in=seat_ids)
@@ -42,8 +29,6 @@ def booking(request, route_id, schedule_id):
 
         booking = Booking.objects.create(
             user=user,
-            source_location=source_location,
-            destination_location=destination_location,
             schedule=schedule,
             total_seats=seats.count(),
             amount=total_price,
@@ -59,7 +44,6 @@ def booking(request, route_id, schedule_id):
         return redirect(makePayment, booking.pk)
     context = {
         "route": route,
-        "AllStops": AllStops,
         "allSeats": allSeats,
         "schedule": schedule,
     }

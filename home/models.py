@@ -37,14 +37,27 @@ class Seat(models.Model):
     flight_class = models.CharField(max_length=20, choices=FLIGHT_CLASS)
     category = models.CharField(max_length=20, choices=SEAT_CATEGORIES)
     is_available = models.BooleanField(default=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, default=0.0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ["flight", "seat_number"]
+        ordering = ["flight", 'flight_class', "seat_number"]
 
     def __str__(self):
         return f"{self.seat_number} - {self.flight.name} - ({self.flight_class})"
+
+    def save(self, *args, **kwargs):
+        if self.flight_class == "economy":
+            self.price = 100.0
+        elif self.flight_class == "premium_economy":
+            self.price = 150.0
+        elif self.flight_class == "business":
+            self.price = 200.0
+        elif self.flight_class == "first":
+            self.price = 250.0 
+
+        super().save(*args, **kwargs)
 
 
 @receiver(post_save, sender=Flight)
@@ -99,50 +112,6 @@ class Route(models.Model):
 
     def __str__(self):
         return f"{self.departure_location} - {self.arrival_location}"
-
-
-class Stop(models.Model):
-    route = models.ForeignKey(Route, on_delete=models.CASCADE, related_name="stops")
-    location = models.CharField(max_length=100)
-    km = models.FloatField()
-    arrival_time = models.TimeField()
-    departure_time = models.TimeField()
-    duration = models.DurationField(null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        ordering = ["arrival_time"]
-
-    def __str__(self):
-        return f"{self.location} - {self.route}"
-
-    def clean(self):
-        if (
-            self.arrival_time
-            and self.departure_time
-            and self.arrival_time >= self.departure_time
-        ):
-            raise ValidationError("Arrival time must be less than departure time.")
-
-    def get_duration(self):
-        """
-        Returns the duration between the arrival time and the departure time
-        as a timedelta object.
-        """
-        if self.arrival_time and self.departure_time:
-            arrival = datetime.combine(datetime.today(), self.arrival_time)
-            departure = datetime.combine(datetime.today(), self.departure_time)
-            duration = departure - arrival
-            return duration
-
-    def save(self, *args, **kwargs):
-        """
-        Overrides the save method to calculate and set the duration field
-        based on the arrival and departure times.
-        """
-        self.duration = self.get_duration()
-        super().save(*args, **kwargs)
 
 
 class Schedule(models.Model):

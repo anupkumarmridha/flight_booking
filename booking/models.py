@@ -5,7 +5,7 @@ from notification.models import Notification
 
 # Create your models here.
 from django.db import models
-from home.models import Schedule, Stop, Seat
+from home.models import Schedule, Seat
 from accounts.models import User
 
 from django.core.mail import send_mail
@@ -13,12 +13,8 @@ from flight_booking import settings
 
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    source_location = models.ForeignKey(
-        Stop, on_delete=models.CASCADE, related_name="source_bookings"
-    )
-    destination_location = models.ForeignKey(
-        Stop, on_delete=models.CASCADE, related_name="destination_bookings"
-    )
+    source_location = models.CharField(max_length=100)
+    destination_location = models.CharField(max_length=100)
     schedule = models.ForeignKey(Schedule, on_delete=models.SET_NULL, null=True)
     seats = models.ManyToManyField(Seat)
     total_seats = models.IntegerField(default=0)
@@ -28,8 +24,17 @@ class Booking(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def save(self, *args, **kwargs):
+        """
+        Overrides the save method to set the departure_location
+        and arrival_location.
+        """
+        self.source_location = self.schedule.route.departure_location
+        self.destination_location = self.schedule.route.arrival_location
+        super().save(*args, **kwargs)
+        
     def __str__(self):
-        return f"{self.user.username} - {self.schedule.route.departure_location} to {self.schedule.route.arrival_location}"
+        return f"{self.user.username} - {self.source_location} to {self.destination_location}"
 
 
 @receiver(pre_delete, sender=Booking)
@@ -74,8 +79,8 @@ def create_notification(sender, instance, created, **kwargs):
         send_mail(
                 f"Booking cancelation ({instance.id})",
                 message,
-                settings.EMAIL_FROM,  # Replace with your email address
-                [instance.user.email],  # Replace with the user's email address
+                settings.EMAIL_FROM,
+                [instance.user.email],
                 fail_silently=False,
             )
     else:
