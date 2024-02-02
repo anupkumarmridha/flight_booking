@@ -146,7 +146,7 @@ class Stop(models.Model):
 
 
 class Schedule(models.Model):
-    flight = models.ForeignKey(Flight, unique=True, on_delete=models.CASCADE)
+    flight = models.OneToOneField(Flight, on_delete=models.CASCADE)
     route = models.ForeignKey(Route, on_delete=models.CASCADE)
     source_departure_datetime = models.DateTimeField()
     destination_arrival_datetime = models.DateTimeField()

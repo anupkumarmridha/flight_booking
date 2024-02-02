@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "accounts.apps.AccountsConfig",
     "home.apps.HomeConfig",
     "booking.apps.BookingConfig",
-    # "notification.apps.NotificationConfig",
+    "notification.apps.NotificationConfig",
     "ckeditor",
     "crispy_forms",
     "django_extensions",
