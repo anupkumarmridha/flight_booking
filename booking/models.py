@@ -18,7 +18,7 @@ class Booking(models.Model):
     destination_location = models.ForeignKey(
         Stop, on_delete=models.CASCADE, related_name="destination_bookings"
     )
-    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
+    schedule = models.ForeignKey(Schedule, on_delete=models.SET_NULL, null=True)
     seats = models.ManyToManyField(Seat)
     total_seats = models.IntegerField(default=0)
     status = models.CharField(max_length=20, default="pending")
