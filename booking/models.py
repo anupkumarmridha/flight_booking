@@ -1,6 +1,7 @@
 from django.db import models
 from django.dispatch import receiver
 from django.db.models.signals import post_save, pre_delete
+from notification.models import Notification
 
 # Create your models here.
 from django.db import models
@@ -37,6 +38,56 @@ def set_seats_available(sender, instance, **kwargs):
         seat.is_available = True
         seat.save()
 
+@receiver(post_save, sender=Booking)
+def create_notification(sender, instance, created, **kwargs):
+    if created and instance.status == "confirmed":
+        # New booking was created with confirmed status
+        message = f"Your booking ({instance.id}) has been confirmed."
+        notification_type = "booking_confirmed"
+        send_mail(
+                f"Booking confirmation ({instance.id})",
+                message,
+                settings.EMAIL_FROM,  # Replace with your email address
+                [instance.user.email],  # Replace with the user's email address
+                fail_silently=False,
+            )
+    elif not created and instance.status == "confirmed":
+        # Booking status was updated to confirmed
+        message = f"Your booking ({instance.id}) has been confirmed."
+        notification_type = "booking_confirmed"
+        send_mail(
+                f"Booking confirmation ({instance.id})",
+                message,
+                settings.EMAIL_FROM,  # Replace with your email address
+                [instance.user.email],  # Replace with the user's email address
+                fail_silently=False,
+            )
+    elif not created and instance.status == "pending":
+        # Booking status was updated to pending
+        message = f"Your payment is {instance.status}"
+        notification_type = "booking_updated"
+        
+    elif not created and instance.status == "cancelled":
+        # Booking status was updated to cancelled
+        message = f"Your booking ({instance.id}) has been cancelled."
+        notification_type = "booking_cancelled"
+        send_mail(
+                f"Booking cancelation ({instance.id})",
+                message,
+                settings.EMAIL_FROM,  # Replace with your email address
+                [instance.user.email],  # Replace with the user's email address
+                fail_silently=False,
+            )
+    else:
+        # No new notification needed
+        return
+    
+    # Create the notification object
+    Notification.objects.create(
+        user=instance.user,
+        message=message,
+        notification_type=notification_type
+    )
 
 @receiver(post_save, sender=Booking)
 def update_schedule_total_available_seats_on_flight(sender, instance, **kwargs):
