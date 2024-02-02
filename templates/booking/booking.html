@@ -1,8 +1,8 @@
 {% extends 'base.html' %} {% load static %} {% block body %}
 <div class="container-fluid bg-white my-5 p-5px" id="add-prod-css">
   <div class="row justify-content-center">
-    <div class="mt-2 ">
-      <h6>Flight Booking System</h6>
+    <div class="mt-2">
+      <h4 class="text-center">Flight Booking System</h4>
       <h4>
         <div class="text-center">
           <a href="{% url 'all_schedules' route.pk %}" class="btn btn-primary"
@@ -58,6 +58,7 @@
             <option value="{{seat.pk}}">
               {{seat.seat_number}} - {{seat.price}} - {{seat.flight_class}} - {{ seat.category }}  
             </option>
+            <span class="visually-hidden" id="seat-price" value="{{seat.price}}"></span>
             {% endfor %}
           </select>
         </div>
@@ -85,7 +86,9 @@
             readonly
           />
         </div>
+        <div class="text-center pb-3">
         <button type="submit" class="btn btn-primary">Submit</button>
+      </div>
       </form>
     </div>
   </div>
@@ -96,7 +99,9 @@
   const seatSelect = document.querySelector('select[name="seat_ids"]');
   const totalPriceInput = document.getElementById("total_price");
   const totalDistance = document.getElementById("distance").value;
-  console.log(totalDistance);
+  // const seatPrice = document.getElementById("seat-price").value;
+  // console.log(seatPrice);
+  // console.log(totalDistance);
   seatSelect.addEventListener("change", calculateTotalPrice);
 
   function calculateTotalPrice() {
@@ -105,8 +110,16 @@
 
     // Get the number of selected seats and calculate the final price
     const selectedSeats = document.querySelectorAll('select[name="seat_ids"] option:checked');
+    // console.log("Selected seats ",selectedSeats);
+
     const numSeats = selectedSeats.length;
-    
+    for(let i = 0; i < numSeats; i++){
+      const selectedSeatPrice = parseInt(selectedSeats[i].textContent.split(" - ")[1]);
+      totalPrice += selectedSeatPrice;
+      console.log("selectedSeatPrice ", selectedSeatPrice);
+      console.log("totalPrice ", totalPrice);
+    }
+    // const selectedSeatPrice = selectedSeats[0];
     const seatPrice = 5;
     totalPrice += numSeats * seatPrice;
 
