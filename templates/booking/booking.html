@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% load static %} {% block body %}
 <div class="container-fluid bg-white my-5 p-5px" id="add-prod-css">
   <div class="row justify-content-center">
-    <div class="col-lg-6 col-md-8 col-sm-10">
+    <div class="mt-2 col-lg-6 col-md-8 col-sm-10">
       <h6>Flight Booking System</h6>
       <h4>
         <div class="text-center">
@@ -65,9 +65,9 @@
         <div class="form-group">
           <select name="seat_ids" class="custom-select" multiple required>
             <option selected>Select Your Seat</option>
-            {% for seat in allSeats %}
+            {% for seat in allSeats|dictsort:"flight_class" %}
             <option value="{{seat.pk}}">
-              {{seat.seat_number}} - {{ seat.category }}
+              {{seat.seat_number}} - {{seat.flight_class}} - {{ seat.category }}  
             </option>
             {% endfor %}
           </select>
@@ -90,8 +90,10 @@
             type="date"
             class="form-control"
             name="travel_date"
+            value="{{ schedule.source_departure_datetime|date:'Y-m-d' }}"
             id="travel_date"
             required
+            readonly
           />
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>

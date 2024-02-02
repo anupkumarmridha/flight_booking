@@ -31,7 +31,7 @@
             <td>{{ booking.travel_date }}</td>
             <td>
                 {% for seat in booking.seats.all %}
-                {{ seat.seat_number }}-{{ seat.category}}
+                {{ seat.seat_number }} - {{seat.flight_class}} -{{ seat.category}}
                 {% if not forloop.last %}, {% endif %}
                 {% endfor %}
             </td>
