@@ -34,7 +34,7 @@ class Booking(models.Model):
         super().save(*args, **kwargs)
         
     def __str__(self):
-        return f"{self.user.username} - {self.schedule.route.departure_location} to {self.schedule.route.arrival_location}"
+        return f"{self.user.username} - {self.source_location} to {self.destination_location}"
 
 
 @receiver(pre_delete, sender=Booking)
@@ -79,8 +79,8 @@ def create_notification(sender, instance, created, **kwargs):
         send_mail(
                 f"Booking cancelation ({instance.id})",
                 message,
-                settings.EMAIL_FROM,  # Replace with your email address
-                [instance.user.email],  # Replace with the user's email address
+                settings.EMAIL_FROM,
+                [instance.user.email],
                 fail_silently=False,
             )
     else:

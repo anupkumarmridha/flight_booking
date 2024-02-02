@@ -19,14 +19,9 @@ def booking(request, route_id, schedule_id):
     )
     if request.method == "POST":
         user = request.user
-        source_location = request.POST.get("source_location")
-        destination_location = request.POST.get("destination_location")
-
+        
         total_price = request.POST.get("total_price")
         travel_date = request.POST.get("travel_date")
-
-        source_location = source_location
-        destination_location = destination_location
 
         seat_ids = request.POST.getlist("seat_ids")
         seats = Seat.objects.filter(id__in=seat_ids)
@@ -34,8 +29,6 @@ def booking(request, route_id, schedule_id):
 
         booking = Booking.objects.create(
             user=user,
-            source_location=source_location,
-            destination_location=destination_location,
             schedule=schedule,
             total_seats=seats.count(),
             amount=total_price,
