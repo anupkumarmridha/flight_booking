@@ -24,7 +24,7 @@ class StopAdmin(admin.ModelAdmin):
     list_filter=('route__departure_location','route__arrival_location','route__travel_time','arrival_time', 'departure_time','duration',)
 class ScheduleAdmin(admin.ModelAdmin):
     search_fields=('flight__name', 'flight__flight_no', 'route__departure_location', 'route__arrival_location',)
-    list_filter=('flight__name', 'flight__flight_no','route__departure_location','route__arrival_location','total_available_seats_on_flight','route__travel_time','arrival_time', 'departure_time','duration',)
+    list_filter=('flight__name', 'flight__flight_no','route__departure_location','route__arrival_location','total_available_seats_on_flight','route__travel_time','destination_arrival_datetime', 'source_departure_datetime','duration',)
 
 admin.site.register(Flight, FlightAdmin)
 admin.site.register(Route, RouteAdmin)

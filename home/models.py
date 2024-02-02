@@ -148,38 +148,38 @@ class Stop(models.Model):
 class Schedule(models.Model):
     flight = models.ForeignKey(Flight, unique=True, on_delete=models.CASCADE)
     route = models.ForeignKey(Route, on_delete=models.CASCADE)
-    arrival_time = models.TimeField()
-    departure_time = models.TimeField()
+    source_departure_datetime = models.DateTimeField()
+    destination_arrival_datetime = models.DateTimeField()
     duration = models.DurationField(null=True, blank=True)
     total_seats_on_flight = models.IntegerField(null=True, blank=True)
-    total_available_seats_on_flight = models.IntegerField(null=True, blank=True)
-    schedule_date=models.DateField()
+    total_available_seats_on_flight = models.IntegerField(null=True, blank=True)    
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        ordering = ["departure_time"]
+        ordering = ["source_departure_datetime"]
 
     def __str__(self):
-        return f"{self.flight.name} - {self.route.departure_location} to {self.route.arrival_location} - {self.departure_time} - {self.arrival_time}"
+        return f"{self.flight.name} - {self.route.departure_location} to {self.route.arrival_location} - {self.source_departure_datetime} - {self.destination_arrival_datetime}"
 
     def clean(self):
         if (
-            self.arrival_time
-            and self.departure_time
-            and self.departure_time >= self.arrival_time
+            self.destination_arrival_datetime
+            and self.source_departure_datetime
+            and self.source_departure_datetime >= self.destination_arrival_datetime
         ):
-            raise ValidationError("Departure time must be less than Arival time.")
+            raise ValidationError("Departure datetime must be less than Arival datetime.")
 
     def get_duration(self):
         """
         Returns the duration between the arrival time and the departure time
         as a timedelta object.
         """
-        if self.arrival_time and self.departure_time:
-            arrival = datetime.combine(datetime.today(), self.arrival_time)
-            departure = datetime.combine(datetime.today(), self.departure_time)
-            duration = arrival - departure
+        if self.destination_arrival_datetime and self.source_departure_datetime:
+            # arrival = datetime.combine(datetime.today(), self.arrival_time)
+            # departure = datetime.combine(datetime.today(), self.departure_time)
+            # duration = arrival - departure
+            duration = self.destination_arrival_datetime - self.source_departure_datetime
             return duration
 
     def save(self, *args, **kwargs):
