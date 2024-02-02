@@ -1,6 +1,5 @@
 from django.shortcuts import render
-from .models import Schedule, Route, Stop
-
+from .models import Schedule, Route
 
 # Create your views here.
 def homeView(request):
@@ -29,12 +28,3 @@ def allSchedules(request, pk):
     }
     return render(request, "home/all_schedules.html", context)
 
-
-def allStops(request, pk):
-    route = Route.objects.get(id=pk)
-    AllStops = Stop.objects.filter(route=route).order_by("departure_time")
-    context = {
-        "AllStops": AllStops,
-        "route": route,
-    }
-    return render(request, "home/all_stops.html", context)
