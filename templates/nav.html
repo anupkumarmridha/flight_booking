@@ -99,11 +99,12 @@
         </li>
       </ul>
 
-      <form class="d-flex">
+      <form class="d-flex" action="{% url 'search' %}" method="GET">
         <input
           id="search-input"
           class="form-control me-2"
           type="search"
+          name="q"
           placeholder="Search"
           aria-label="Search"
         />
