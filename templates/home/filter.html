@@ -1,0 +1,29 @@
+{% load static %} 
+<head>
+<link rel="stylesheet" href="{% static "css/filter.css" %}" />
+  </head>
+    <div class="main-container">
+      <div class="custNav">
+          <form action="" method="post">
+        <div class="lowerpart">
+     
+          <input type="text" class="cust-input" placeholder="From" />
+          <i class="fa-solid fa-arrow-right-arrow-left"></i>
+          <input class="cust-input" type="text" placeholder="To">
+          <div class="dateContainer">
+            <fieldset class="form-group border p-3">
+              <legend class="w-auto mt-1">Start end</legend>
+              <input type="date" class="dateinput cust-input" placeholder="Departure" value="" id="departure-input" />
+            </fieldset>
+            <span style="font-size: 52px;">-</span>
+            <fieldset class="form-group border p-3">
+              <legend class="w-auto mt-1">End date</legend>
+              <input type="date" class="dateinput cust-input" placeholder="Add return trip" style="color: transparent; text-shadow: 0 0 0 #000;" /> 
+            </fieldset>
+          </div>
+          <button class="cust-btn">Search Flight</button>
+        </div>
+    </form>
+      </div>
+    </div>
+    <script type="text/javascript" src="{% static "js/filter.js" %}"></script> 
