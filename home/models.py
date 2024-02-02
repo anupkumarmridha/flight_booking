@@ -146,13 +146,14 @@ class Stop(models.Model):
 
 
 class Schedule(models.Model):
-    flight = models.ForeignKey(Flight, on_delete=models.CASCADE)
+    flight = models.ForeignKey(Flight, unique=True, on_delete=models.CASCADE)
     route = models.ForeignKey(Route, on_delete=models.CASCADE)
     arrival_time = models.TimeField()
     departure_time = models.TimeField()
     duration = models.DurationField(null=True, blank=True)
     total_seats_on_flight = models.IntegerField(null=True, blank=True)
     total_available_seats_on_flight = models.IntegerField(null=True, blank=True)
+    schedule_date=models.DateField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

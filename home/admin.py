@@ -14,7 +14,7 @@ class FlightAdmin(admin.ModelAdmin):
     
 class SeatAdmin(admin.ModelAdmin):
     search_fields=('flight__flight_no',)
-    list_filter=('flight_class','flight__name',)
+    list_filter=('flight_class','flight__name',"is_available",)
     
 class RouteAdmin(admin.ModelAdmin):
     list_filter=('arrival_location','departure_location','travel_time',)
