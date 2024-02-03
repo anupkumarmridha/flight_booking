@@ -51,6 +51,11 @@ def booking(request, route_id, schedule_id):
 
 
 def makePayment(request, booking_id):
+    middleware = AuthenticationMiddleware(get_user)
+    middleware.process_request(request)
+    if not request.user.is_authenticated:
+        return HttpResponse("Submission without login is not allowed ")
+    
     book = Booking.objects.get(id=booking_id)
     if request.method == "POST":
         method = request.POST.get("method")
@@ -78,6 +83,11 @@ def makePayment(request, booking_id):
 
 
 def cancelBookingRefund(request, booking_id):
+    middleware = AuthenticationMiddleware(get_user)
+    middleware.process_request(request)
+    if not request.user.is_authenticated:
+        return HttpResponse("Submission without login is not allowed ")
+    
     booking = Booking.objects.get(id=booking_id)
     payment = Payment.objects.get(booking=booking)
     context = {
@@ -105,6 +115,11 @@ def cancelBookingRefund(request, booking_id):
     return render(request, "booking/cancel.html", context)
 
 def cancelBooking(request, booking_id):
+    middleware = AuthenticationMiddleware(get_user)
+    middleware.process_request(request)
+    if not request.user.is_authenticated:
+        return HttpResponse("Submission without login is not allowed ")
+    
     booking = Booking.objects.get(id=booking_id)
     
     if request.method == 'POST':
@@ -118,6 +133,11 @@ def cancelBooking(request, booking_id):
 
 
 def bookingConfirmation(request, booking_id):
+    middleware = AuthenticationMiddleware(get_user)
+    middleware.process_request(request)
+    if not request.user.is_authenticated:
+        return HttpResponse("Submission without login is not allowed ")
+    
     book = Booking.objects.get(id=booking_id)
     context = {
         "book": book,
@@ -126,6 +146,10 @@ def bookingConfirmation(request, booking_id):
 
 
 def allBookings(request):
+    middleware = AuthenticationMiddleware(get_user)
+    middleware.process_request(request)
+    if not request.user.is_authenticated:
+        return HttpResponse("Submission without login is not allowed ")
    
     user= request.user
     allBookings=Booking.objects.filter(user=user)

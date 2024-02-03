@@ -2,8 +2,8 @@
 {% load static %}
 {% load tz %}
 {% block title %} All Bookings {% endblock title %} 
-
 {% block body %}
+{% if user.is_authenticated %}
 <div class="container mt-5">
   <div class="row">
     <div class="col-md-12">
@@ -106,4 +106,19 @@
     </div>
   </div>
 </div>
+
+{% else %}
+<p class="text-center p-5 m-5">
+  404 Not Found please
+  <button
+  type="button"
+  class="btn btn-outline-success btn-sm mx-1"
+  data-bs-toggle="modal"
+  data-bs-target="#loginModal"
+>
+  Login
+</button>
+</p>
+{% endif %}
+
 {% endblock body %}

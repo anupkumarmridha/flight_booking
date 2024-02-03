@@ -1,4 +1,6 @@
 {% extends 'base.html' %} {% load static %} {% block body %}
+
+{% if user.is_authenticated %}
 <div class="container-fluid bg-white my-5 p-5px" id="add-prod-css">
   <div class="row justify-content-center">
     <div class="mt-2">
@@ -93,6 +95,17 @@
     </div>
   </div>
 </div>
+{% else %}
+
+<button
+  type="button"
+  class="btn btn-outline-success btn-sm mx-1"
+  data-bs-toggle="modal"
+  data-bs-target="#loginModal"
+>
+  Book Now
+</button>
+{% endif %}
 
 <script>
   
