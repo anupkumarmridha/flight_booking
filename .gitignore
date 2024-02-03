@@ -2,6 +2,7 @@
 env
 db.sqlite3
 *.pyc
+flight_booking/settings.cpython-311.pyc
 
 accounts/migrations
 home/migrations
@@ -12,5 +13,5 @@ accounts/__pycache__
 home/__pycache__
 booking/__pycache__
 notification/__pycache__
-
 flight_booking/__pycache__
+
