@@ -48,25 +48,33 @@ def create_notification(sender, instance, created, **kwargs):
     if created and instance.status == "confirmed":
         # New booking was created with confirmed status
         message = f"Your booking ({instance.id}) has been confirmed."
+        subject = f"Booking confirmation ({instance.id})"
+        from_email = settings.EMAIL_HOST_USER
+        recipient_list = [instance.user.email]
         notification_type = "booking_confirmed"
         send_mail(
-                f"Booking confirmation ({instance.id})",
+                subject,
                 message,
-                settings.EMAIL_FROM,  # Replace with your email address
-                [instance.user.email],  # Replace with the user's email address
-                fail_silently=False,
+                from_email,
+                recipient_list,
+                # fail_silently=False,
             )
+        
     elif not created and instance.status == "confirmed":
         # Booking status was updated to confirmed
         message = f"Your booking ({instance.id}) has been confirmed."
+        subject = f"Booking confirmation ({instance.id})"
+        from_email = settings.EMAIL_HOST_USER
+        recipient_list = [instance.user.email]
         notification_type = "booking_confirmed"
         send_mail(
-                f"Booking confirmation ({instance.id})",
+                subject,
                 message,
-                settings.EMAIL_FROM,  # Replace with your email address
-                [instance.user.email],  # Replace with the user's email address
-                fail_silently=False,
+                from_email,
+                recipient_list,
+                # fail_silently=False,
             )
+        
     elif not created and instance.status == "pending":
         # Booking status was updated to pending
         message = f"Your payment is {instance.status}"
