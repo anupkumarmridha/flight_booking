@@ -5,7 +5,9 @@ from datetime import datetime
 # Create your views here.
 def homeView(request):
     routes = Route.objects.all()
+    schedules = Schedule.objects.all().order_by("source_departure_datetime")
     context = {
+        "AllSchedules": schedules,
         "routes": routes,
     }
     return render(request, "home/index.html", context)

@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% block body %}
 
+{% if user.is_authenticated %}
 <div class="container mt-5">
   <div class="row justify-content-center">
     <div class="col-md-8">
@@ -27,5 +28,17 @@
     </div>
   </div>
 </div>
+{% else %}
 
-{% endblock body %}
+<p class="text-center p-5 m-5">
+  404 Not Found please
+  <button
+  type="button"
+  class="btn btn-outline-success btn-sm mx-1"
+  data-bs-toggle="modal"
+  data-bs-target="#loginModal"
+>
+  Login
+</button>
+</p>
+{% endif %} {% endblock body %}
