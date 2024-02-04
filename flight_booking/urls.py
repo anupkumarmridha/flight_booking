@@ -29,4 +29,4 @@ urlpatterns = [
     path("accounts", include("accounts.urls")),
     path("booking", include("booking.urls")),
     path("notification", include("notification.urls")),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
