@@ -23,10 +23,6 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
 - [Usage](#usage)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
-  - [Creating A Pull Request](#creating-a-pull-request)
-- [License](#license)
 - [Authors](#authors)
 
 ## About The Project
@@ -72,9 +68,6 @@ Deployment:
 Version Control: 
 * Git
 
-
-* []()
-
 ## Getting Started
 
 This is an example of how you may give instructions on setting up your project locally. To get a local copy up and running, follow these steps.
@@ -117,98 +110,89 @@ docker-compose up
 
 ## Usage
 
-1. Registration and Login:
+#### Flight Booking System - User Flow:
+
+**1. Registration and Login:**
 
 * New users register by providing basic details.
 * Existing users log in using their credentials.
 * Authentication mechanisms ensure secure access.
 
-2. Homepage:
+**2. Homepage:**
 
 * Users are greeted with a user-friendly homepage.
 * Prominent search bar allows users to initiate flight searches.
 
-3. Flight Search and Filtering:
+**3. Flight Search and Filtering:**
 
 * Users input their travel details, such as source, destination and date.
 
-4. View Flight Details:
+**4. View Flight Details:**
 
 * Search results display available flights with comprehensive details.
 Information includes departure/arrival locations, departure/arrival times, available seats, and pricing.
 
-5. Seat Selection and Booking:
+**5. Seat Selection and Booking:**
 
 * Users select desired flights and choose seats.
 Option to reserve seats and complete bookings at a later time.
 
-6. Payment Integration:
+**6. Payment Integration:**
 
 * Seamless demo integration with various payment methods (credit card, debit card, UPI).
 
-7. Booking Confirmation:
+**7. Booking Confirmation:**
 
 * Users receive real-time notifications for booking confirmations.
 Booking details, including departure time and seat information, are provided.
 
-8. Booking History and Tracking:
+**8. Booking History and Tracking:**
 * Users can view a comprehensive booking history.
 Real-time tracking of the status of current bookings and cancelling the bookings.
 
-9. Logout: Users can securely log out to end their session.
+**9. Logout:** 
+* Users can securely log out to end their session.
 
 
-Flight Booking System - Admin Flow:
+#### Flight Booking System - Admin Flow:
 
-1. Admin Login:
+**1. Admin Login:**
 * Admins log in using Gmail and password.
 
-2.  Homepage:
+**2.  Homepage:**
 * Users are greeted with a user-friendly homepage after, in the sidebar, clicking on the admin portal.
 
-3. Add Flight:
+**3. Add Flight:**
 * Admins have the ability to add new flights.
 * Enter flight details such as flight number, name, type, and capacity.
 
-4. Manage Flight Details:
+**4. Manage Flight Details:**
 * Admins can view and update details of existing flights.
 * Options to edit flight information, update capacity, and manage seat availability.
 
-5. Add Routes:
+**5. Add Routes:**
 * Admins add new flight routes by specifying departure and arrival locations.
 * Enter the distance of each route.
 
-6. Manage Routes:
+**6. Manage Routes:**
 * View and update details of existing routes.
 * Options to edit departure/arrival locations updates and distances.
 
-7. Schedule Management:
+**7. Schedule Management:**
 
 * Admins create schedules for flights, specifying departure and arrival times.
 * Assign routes to schedules.
 
-8. Update Schedule Details:
+**8. Update Schedule Details:**
 * Admins can view and update details of existing schedules.
 * Options to edit departure/arrival times and update assigned routes.
 
-9. Filter and Search:
+**9. Filter and Search:**
 * Admins can efficiently filter and search through flights, routes, and schedules.
 * Quick access to specific records based on various parameters.
 
-10. Logout:
+**10. Logout:**
 * Admins can securely log out to end their session.
-
-## Roadmap
-
-See the [open issues](https://github.com/anupkumarmridha/flight-booking/issues) for a list of proposed features (and known issues).
-
-## Contributing
-
-Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-* If you have suggestions for adding or removing projects, feel free to [open an issue](https://github.com/anupkumarmridha/flight-booking/issues/new) to discuss it, or directly create a pull request after you edit the *README.md* file with necessary changes.
-* Please make sure you check your spelling and grammar.
-* Create individual PR for each suggestion.
-* Please also read through the [Code Of Conduct](https://github.com/anupkumarmridha/flight-booking/blob/main/CODE_OF_CONDUCT.md) before posting your first idea as well.
 
 ### Creating A Pull Request
 
@@ -217,10 +201,6 @@ Contributions are what make the open source community such an amazing place to b
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
-## License
-
-Distributed under the MIT License. See [LICENSE](https://github.com/anupkumarmridha/flight-booking/blob/main/LICENSE.md) for more information.
 
 ## Authors
 
