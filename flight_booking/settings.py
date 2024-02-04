@@ -132,8 +132,11 @@ USE_TZ = True
 
 STATIC_URL = os.path.join(BASE_DIR, "static/")
 MEDIA_URL = os.path.join(BASE_DIR, "media/")
+if env('ENV') == "production":
+    STATIC_ROOT = os.path.join(BASE_DIR, "static")
+else:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 

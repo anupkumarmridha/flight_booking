@@ -106,7 +106,6 @@ class Route(models.Model):
     departure_location = models.CharField(max_length=100)
     arrival_location = models.CharField(max_length=100)
     distance = models.IntegerField()
-    travel_time = models.DurationField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

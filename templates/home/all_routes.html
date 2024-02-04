@@ -13,7 +13,6 @@
           <th scope="col">departure_location</th>
           <th scope="col">arrival_location</th>
           <th scope="col">distance</th>
-          <th scope="col">travel_time</th>
         </tr>
       </thead>
       {% for route in AllRoutes %}
@@ -30,7 +29,6 @@
         <td>{{route.departure_location}}</td>
         <td>{{route.arrival_location}}</td>
         <td>{{route.distance}}</td>
-        <td>{{route.travel_time}}</td>
       </tr>
       {% endfor %} {% else %}
 

@@ -4,7 +4,7 @@
     background-color: #0d6efd;
     color: white;
     text-decoration: none;
-    padding: 4px 24px;
+    padding: 4px 0px;
     margin-right: 20px;
     margin-left: 20px;
     position: relative;
@@ -67,12 +67,13 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="nav ms-auto flex-wrap">
         <li class="nav-item">
-          <a class="nav-link" href="#">Reservation Policy</a>
+          <a class="nav-link px-0" href="#">Reservation Policy</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Contact Us</a>
+          <a class="nav-link px-0" href="#">Contact Us</a>
         </li>
-        <li class="nav-item dropdown notification-section">
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown notification-section mx-0">
           <a
             href="/notification/show_user_notifications"
             class="notification dropdown-toggle"
@@ -98,24 +99,25 @@
           ></ul>
         </li>
       </ul>
+      {% endif %}
 
-      <form class="d-flex" action="{% url 'search' %}" method="GET">
+      {% comment %} <form class="d-flex" action="{% url 'search' %}" method="GET">
         <input
           id="search-input"
-          class="form-control me-2"
+          class="form-control me-2 mt-3"
           type="search"
           name="q"
           placeholder="Search"
           aria-label="Search"
         />
         <button
-          class="btn btn-outline-success"
+          class="btn btn-outline-success h-45px mt-1"
           id="search-button"
           type="submit"
         >
           Search
         </button>
-      </form>
+      </form> {% endcomment %}
 
       <!-- {% comment %} login signup {% endcomment %} -->
     </div>
