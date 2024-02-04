@@ -30,7 +30,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -130,13 +130,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
-# added manually
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+STATIC_URL = os.path.join(BASE_DIR, "static/")
+MEDIA_URL = os.path.join(BASE_DIR, "media/")
+
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+# STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
+
+# STATIC_ROOT = '/django/static/'
 
 # added manually
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # added manually
 AUTHENTICATION_BACKENDS = ["accounts.EmailBackEnd.EmailBackEnd"]
@@ -163,11 +166,12 @@ GRAPH_MODELS = {
 
 
 EMAIL_BACKEND = env('EMAIL_BACKEND')
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-EMAIL_FROM = env('EMAIL_FROM')
+EMAIL_HOST = env('EMAIL_HOST')
+EMAIL_PORT = env('EMAIL_PORT')
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
-PASSWORD_RESET_TIMEOUT = 14400
+
+EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False
+EMAIL_FROM = env('EMAIL_FROM')
+# PASSWORD_RESET_TIMEOUT = 14400

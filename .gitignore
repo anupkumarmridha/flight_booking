@@ -15,3 +15,10 @@ booking/__pycache__
 notification/__pycache__
 flight_booking/__pycache__
 
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.DS_Store
+.env
+*.sqlite3

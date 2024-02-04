@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  django_app:
+    build: .
+    volumes:
+      - .:/django
+      - static_volume:/django/static
+      - media_volume:/django/media
+
+    ports:
+      - "8000:8000"
+    image: app:flight_booking_django
+    container_name: flight_booking_django
+    command: gunicorn flight_booking.wsgi:application -b 0.0.0.0:8000
+  
+  nginx:
+    build: ./nginx
+    volumes:
+      - static_volume:/django/static
+      - media_volume:/django/media
+    ports:
+      - "80:80"
+    depends_on:
+      - django_app
+    image: app:flight_booking_nginx
+    container_name: flight_booking_nginx
+  
+volumes:
+    static_volume:
+    media_volume:
