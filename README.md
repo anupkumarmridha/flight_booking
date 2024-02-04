@@ -8,9 +8,6 @@
     A flight booking system allowed you to book flights
     <br/>
     <br/>
-    <a href="https://github.com/anupkumarmridha/flight-booking"><strong>Explore the docs »</strong></a>
-    <br/>
-    <br/>
     <a href="http://flight-booking.live/">View Demo</a>
   </p>
 </p>
