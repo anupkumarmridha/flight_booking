@@ -30,7 +30,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG")
 
-ALLOWED_HOSTS = ['*','0.0.0.0']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -130,14 +130,16 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
-MEDIA_URL = "/media/"
+STATIC_URL = 'static/'
+MEDIA_URL = "media/"
 
-STATIC_ROOT = '/django/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+# STATIC_ROOT = '/django/static/'
 # STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 # added manually
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 # added manually
 AUTHENTICATION_BACKENDS = ["accounts.EmailBackEnd.EmailBackEnd"]
