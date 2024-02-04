@@ -33,9 +33,10 @@
           <th scope="col">Flight</th>
           <th scope="col">Book</th>
           <th scope="col">Available Seat</th>
-          <th scope="col">departure_time</th>
-          <th scope="col">arrival_time</th>
-          <th scope="col">duration</th>
+          <th scope="col">Departure</th>
+          <th scope="col">Arrival</th>
+          <th scope="col">Departure Time</th>
+          <th scope="col">Arrival Time</th>
         </tr>
       </thead>
       {% for schedule in AllSchedules %}
@@ -64,9 +65,10 @@
           {% endif %}
         </td>
         <td>{{schedule.total_available_seats_on_flight}}</td>
+        <td>{{schedule.route.departure_location}}</td>
+        <td>{{schedule.route.arrival_location}}</td>
         <td>{{schedule.source_departure_datetime}}</td>
         <td>{{schedule.destination_arrival_datetime}}</td>
-        <td>{{schedule.duration}}</td>
       </tr>
       {% endfor %}
     </tbody>
