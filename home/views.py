@@ -54,8 +54,8 @@ def search(request):
         filters &= Q(route__departure_location__icontains=source_location)
     if destination_location:
         filters &= Q(route__arrival_location__icontains=destination_location)
-    if query:
-        filters &= Q(route__name__icontains=query)
+    
+    print(filters)
 
     schedules = schedules.filter(filters).order_by("source_departure_datetime")
 
