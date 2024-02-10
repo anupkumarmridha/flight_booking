@@ -9,12 +9,12 @@ WORKDIR /django
 COPY . /django
 
 RUN pip install --upgrade pip && pip install -r requirements.txt gunicorn
-RUN python manage.py collectstatic --noinput
-RUN python manage.py makemigrations
-RUN python manage.py migrate
-RUN python manage.py createsuperuser --noinput --username=admin --email=admin@gmail.com --password=admin
+# RUN python manage.py collectstatic --noinput
+# RUN python manage.py makemigrations
+# RUN python manage.py migrate
+# RUN python manage.py createsuperuser --noinput --username=admin --email=admin@gmail.com --password=admin
 
-# COPY ./scripts /scripts
-# RUN chmod +x /scripts/*
+COPY ./scripts /scripts
+RUN chmod +x /scripts/*
 
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "flight_booking.wsgi:application"]
+CMD ["/scripts/entrypoint.sh","gunicorn", "--bind", "0.0.0.0:8000", "flight_booking.wsgi:application"]
