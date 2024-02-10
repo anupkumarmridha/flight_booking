@@ -14,9 +14,22 @@ def homeView(request):
 
 
 def AllRoutes(request):
-    AllRoutes = Route.objects.all()
+    query = request.GET.get('q')
+    source_location = request.GET.get('source_location')
+    destination_location = request.GET.get('destination_location')
+
+    routes = Route.objects.all()
+    filters = Q()
+    if source_location:
+        filters &= Q(departure_location__icontains=source_location)
+    if destination_location:
+        filters &= Q(arrival_location__icontains=destination_location)
+    
+    print(filters)
+
+    routes = routes.filter(filters).order_by("departure_location")
     context = {
-        "AllRoutes": AllRoutes,
+        "AllRoutes": routes,
     }
     return render(request, "home/all_routes.html", context)
 

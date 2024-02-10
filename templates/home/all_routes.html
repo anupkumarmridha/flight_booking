@@ -1,6 +1,7 @@
 {% extends 'base.html' %} {% load static %} {% block body %}
 
 <div class="container my-3">
+  {% include "home/searchRoute.html" %}
   <h2>All Routes</h2>
 
   {% if AllRoutes %}
